@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 
 export function App() {
   return <>
+    <FreezeDetector />
     <h2>Array:</h2>
     <ArrayBased />
     <h2>Tuple:</h2>
@@ -15,7 +16,7 @@ function ArrayBased() {
 
   useEffect(() => {
     console.log('Rerendered ArrayBased')
-  })
+  });
 
   return <>
     <div>
@@ -46,5 +47,31 @@ function TupleBased() {
 }
 
 function List({ list }) {
-  return Array.from(list).map((item, index) => <div key={index}>{item}</div>)
+  return Array.from(list).map((item, index) => {
+    expensiveCalculation();
+    return <div key={index}>{item}</div>;
+  });
+}
+
+function expensiveCalculation(){
+  let startTime = new Date().getTime();
+  while (new Date().getTime() < startTime + 300);
+}
+
+function FreezeDetector() {
+  const [width, setWidth] = useState(1);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setWidth(Math.abs(Math.sin(Date.now() / 1000)) * 100);
+    }, 17);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  return (
+    <div style={{ height: 100, backgroundColor: 'red', width: `${width}%` }}>
+      <span style={{ position: 'absolute' }}>If this stops, then the page has frozen</span>
+    </div>
+  );
 }
