@@ -70,8 +70,10 @@ function FreezeDetector() {
   }, []);
 
   return (
-    <div style={{ height: 100, backgroundColor: 'red', width: `${width}%` }}>
-      <span style={{ position: 'absolute' }}>If this stops, then the page has frozen</span>
+    <div style={{backgroundColor: "teal"}}>
+      <div style={{ height: 100, backgroundColor: 'orange', width: `${width}%` }}>
+        <span style={{ position: 'absolute' }}>If this stops, then the page has frozen</span>
+      </div>
     </div>
   );
 }
